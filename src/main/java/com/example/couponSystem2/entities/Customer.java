@@ -3,15 +3,16 @@ package com.example.couponSystem2.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @Builder
+@ToString
+@Table(name = "Customers")
 public class Customer {
     @Id
     @GeneratedValue
@@ -25,20 +26,11 @@ public class Customer {
     private String email;
     @Column(name = "customer_password")
     private String password;
-    @Column(name = "customer_list_of_coupons")
-    // todo: join column in order to do the connection one to many?
-    //  maybe we need to do it from the repository
-    private ArrayList<Coupon> coupons;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "customer_list_of_coupons",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "coupon_id"))
+    @ToString.Exclude
+    private List<Coupon> coupons;
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", coupons=" + coupons +
-                '}'+ "\n";
-    }
 }
