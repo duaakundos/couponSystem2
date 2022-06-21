@@ -1,17 +1,17 @@
 package com.example.couponSystem2.entities;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @Builder
+@ToString
+@Table(name = "companies")
 public class Company {
     @Id
     @GeneratedValue
@@ -23,18 +23,9 @@ public class Company {
     private String  email;
     @Column(name = "company_password")
     private String  password;
-    @OneToMany(mappedBy = "company_id", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY,
     cascade = CascadeType.ALL)
-    private ArrayList<Coupon> coupons;
+    @ToString.Exclude
+    private List<Coupon> coupons;
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", coupons=" + coupons +
-                '}' + "\n";
-    }
 }
