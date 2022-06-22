@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Category {
-    FOOD(1),
-    ELECTRICITY(2),
-    RESTAURANT(3),
-    VACATION(4);
+    FOOD(0),
+    ELECTRICITY(1),
+    RESTAURANT(2),
+    VACATION(3);
 
     private int value;
     private static Map map = new HashMap<>();

@@ -19,10 +19,12 @@ public class Coupon {
     @GeneratedValue
     @Column(name = "coupon_id")
     private int id;
-    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Company.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
-    private int company;
-    @Column(name = "coupon_category")
+    private Company company;
+//    private int company_id;
+    @Column(name = "coupon_category_id")
     private Category category;
     @Column(name = "coupon_title")
     private String title;
