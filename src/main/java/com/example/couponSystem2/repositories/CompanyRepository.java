@@ -20,11 +20,10 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     //getOneCompany
     Company findById(int id);
 
-//    getCompanyID
+    //getCompanyID
     @Query(value = "select company_id from companies c where c.company_email = :email and c.company_password = :password", nativeQuery = true)
     int getCompanyID(@Param("email") String email, @Param("password") String password);
 
-//    @Modifying
     @Transactional
     @Modifying
     @Query(value = "update companies c set c.company_email = :email, c.company_password = :password where c.company_id = :id", nativeQuery = true)

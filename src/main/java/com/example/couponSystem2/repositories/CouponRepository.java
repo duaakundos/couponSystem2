@@ -1,7 +1,40 @@
 package com.example.couponSystem2.repositories;
 
+import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Coupon;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
+
+    boolean existsCouponByCompany_IdAndTitle(int company_id, String title);
+//    boolean existsCouponByCompany_idAndTitle(int company_id, String title);
+
+    public Coupon findById(int couponID);
+
+    ArrayList<Coupon> findAllByCompany_Id(int companyID);
+
+    ArrayList<Coupon> findAllByCompany_IdAndCategory(int companyID, Category category);
+
+    ArrayList<Coupon> findAllByCompany_IdAndPriceLessThan(int company_id, double price);
+
+    @Transactional
+    @Modifying
+    @Query(value = "insert into customer_list_of_coupons (CUSTOMER_ID, COUPON_ID) values (?1,?2) ", nativeQuery = true)
+    void addCouponPurchase(int customerID, int couponID);
+
+    @Transactional
+    int deleteAllByEndDateLessThan(Date date);
+
+    @Query(value = "select c.* from coupon c Join customer_list_of_coupons cvc on c.coupon_id = cvc.coupon_id and cvc.customer_id = ?1", nativeQuery = true)
+    ArrayList<Coupon> getPurchasedCouponsByCustomer(int customerID);
+
+    @Query(value = "select c.* from coupon c Join customer_list_of_coupons cvc on c.coupon_id = cvc.coupon_id and cvc.customer_id = ?1 and c.coupon_category_id = ?2", nativeQuery = true)
+    ArrayList<Coupon> getAllCouponsByCustomerByCategory(int customerID, int category_id);
 }
