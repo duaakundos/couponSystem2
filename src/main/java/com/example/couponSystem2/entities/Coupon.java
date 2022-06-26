@@ -30,12 +30,12 @@ public class Coupon {
     private String title;
     @Column(name = "coupon_description")
     private String description;
-    @Temporal(value = TemporalType.DATE)
+//    @Temporal(value = TemporalType.DATE)
     @Column(name = "start_date")
-    private Date startDate;
-    @Temporal(value = TemporalType.DATE)
+    private java.sql.Date startDate;
+//    @Temporal(value = TemporalType.DATE)
     @Column(name = "end_date")
-    private Date endDate;
+    private java.sql.Date endDate;
     @Column(name = "coupon_amount")
     private int amount;
     @Column(name = "coupon_price")
@@ -48,5 +48,6 @@ public class Coupon {
             inverseJoinColumns = @JoinColumn(name = "customer_id"))
     @ToString.Exclude
     private List<Customer> customersList;
+
 
 }
