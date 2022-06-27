@@ -37,4 +37,41 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 
     @Query(value = "select c.* from coupon c Join customer_list_of_coupons cvc on c.coupon_id = cvc.coupon_id and cvc.customer_id = ?1 and c.coupon_category_id = ?2", nativeQuery = true)
     ArrayList<Coupon> getAllCouponsByCustomerByCategory(int customerID, int category_id);
+
+    @Query(value = "select c.* from coupon c Join customer_list_of_coupons cvc on c.coupon_id = cvc.coupon_id and cvc.customer_id = ?1 and c.coupon_price < ?2", nativeQuery = true)
+    ArrayList<Coupon> getAllCouponsByCustomerByMaxPrice(int customerID, double maxPrice);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update coupon c set " +
+            "c.coupon_title = :coupon_title, " +
+            "c.coupon_description = :coupon_description, " +
+            "c.start_date = :coupon_start_date, " +
+            "c.end_date = :coupon_end_date, " +
+            "c.coupon_amount = :coupon_amount, " +
+            "c.coupon_price = :coupon_price, " +
+            "c.coupon_image = :coupon_image " +
+            "where c.coupon_id = :coupon_ID", nativeQuery = true)
+    Integer updateCoupon(@Param("coupon_title") String coupon_title,
+                      @Param("coupon_description") String coupon_description,
+                      @Param("coupon_start_date") java.sql.Date start_date,
+                      @Param("coupon_end_date") java.sql.Date end_date,
+                      @Param("coupon_amount") int coupon_amount,
+                      @Param("coupon_price") double coupon_price,
+                      @Param("coupon_image") String coupon_image,
+                      @Param("coupon_ID") int couponID);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from customer_list_of_coupons where customer_id = :customerID and coupon_id = :couponID", nativeQuery = true)
+    void deleteCouponPurchase(@Param("customerID") int customerID, @Param("couponID") int couponID);
+
+    // todo: couldn't figure out a way to return boolean, tried with case ^ but didn't work.
+//    @Query(value = "SELECT CASE WHEN COUNT(customer_list_of_coupons) > 0 THEN true ELSE false END FROM customer_list_of_coupons cvc WHERE customer_id = :customerID and coupon_id = :couponID", nativeQuery = true)
+//    boolean isCustomerHasCoupon(@Param("customerID") int customerID,@Param("couponID") int couponID);
+
+    @Query(value = "SELECT* FROM customer_list_of_coupons where customer_id = :customerID and coupon_id = :couponID", nativeQuery = true)
+    Integer isCustomerHasCoupon(@Param("customerID") int customerID,@Param("couponID") int couponID);
+
 }
