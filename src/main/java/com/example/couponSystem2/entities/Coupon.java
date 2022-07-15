@@ -22,6 +22,7 @@ public class Coupon {
 //    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ManyToOne(targetEntity = Company.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
+    // todo: shaked wanted to know why we changed back to company instead of int id
     private Company company;
 //    private int company_id;
     @Column(name = "coupon_category_id")

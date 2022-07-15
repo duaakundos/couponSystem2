@@ -40,7 +40,8 @@ public class CompanyService {
     }
 
     public Company getOneCompany(int companyID) {
-        return companyRepository.findById(companyID);
+        // add our throw
+        return companyRepository.findById(companyID).orElseThrow();
     }
 
     public int getCompanyID(String email, String password) {
