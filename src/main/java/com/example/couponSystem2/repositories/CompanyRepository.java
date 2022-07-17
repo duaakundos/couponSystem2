@@ -28,6 +28,9 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     @Modifying
     @Query(value = "update companies c set c.company_email = :email, c.company_password = :password where c.company_id = :id", nativeQuery = true)
     void updateCompany(@Param("email") String email, @Param("password") String password,@Param("id") int id);
+
 //    @Query(value = "update companies c set c.company_email = ?1, c.company_password = ?2 where c.company_id = ?3", nativeQuery = true)
 //    void updateCompany( String email, String password, int id);
+
+
 }
