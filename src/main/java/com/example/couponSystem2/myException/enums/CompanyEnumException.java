@@ -1,6 +1,6 @@
-package com.example.couponSystem2.controllers.enums;
+package com.example.couponSystem2.myException.enums;
 
-import com.example.couponSystem2.controllers.ErrorDetails;
+import com.example.couponSystem2.myException.ErrorDetails;
 
 public enum CompanyEnumException implements ErrorDetails {
     EMAIL_AND_PASSWORD_ALREADY_EXIST_IN_SYSTEM,
