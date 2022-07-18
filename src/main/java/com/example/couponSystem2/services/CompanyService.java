@@ -1,6 +1,8 @@
 package com.example.couponSystem2.services;
 
 
+import com.example.couponSystem2.controllers.CouponSystemException;
+import com.example.couponSystem2.controllers.enums.CompanyEnumException;
 import com.example.couponSystem2.entities.Company;
 import com.example.couponSystem2.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class CompanyService {
     }
 
     public Company addCompany(Company company) {
+        if (companyRepository.existsCompanyByEmailOrName(company.getEmail(), company.getName())){
+            throw new CouponSystemException(CompanyEnumException.COMPANY_NAME_OR_EMAIL_ALREADY_EXISTS);
+        }
         Company companyFromDB = companyRepository.save(company);
         return companyFromDB;
     }
