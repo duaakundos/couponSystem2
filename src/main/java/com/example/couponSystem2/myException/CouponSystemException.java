@@ -1,4 +1,4 @@
-package com.example.couponSystem2.controllers;
+package com.example.couponSystem2.myException;
 
 public class CouponSystemException extends RuntimeException{
     private ErrorDetails errorDetails;

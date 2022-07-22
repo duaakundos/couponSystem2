@@ -1,4 +1,4 @@
-package com.example.couponSystem2.services;
+package com.example.couponSystem2.oldServices;
 
 import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Coupon;
@@ -18,6 +18,8 @@ public class CouponService {
 
     @Autowired
     CouponRepository couponRepository;
+
+
 
     public void deleteAll() {
         couponRepository.deleteAll();
