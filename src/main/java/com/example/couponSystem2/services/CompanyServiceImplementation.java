@@ -20,18 +20,9 @@ import java.util.List;
 public class CompanyServiceImplementation extends ClientService implements CompanyService {
     private int companyID;
 
-//    public CompanyServiceImplementation(@NonNull CompanyRepository companyRepository, @NonNull CustomerRepository customerRepository, @NonNull CouponRepository couponRepository, int companyID) {
-//        super(companyRepository, customerRepository, couponRepository);
-//        this.companyID = companyID;
-//    }
 
-
-    public CompanyServiceImplementation(int companyID) {
-        this.companyID = companyID;
-    }
-    public CompanyServiceImplementation() {
-        
-    }
+    public CompanyServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
+        super(companyRepository, customerRepository, couponRepository);
 
 
     @Override

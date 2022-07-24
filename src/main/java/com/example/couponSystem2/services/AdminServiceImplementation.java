@@ -9,7 +9,6 @@ import com.example.couponSystem2.myException.enums.CustomerEnumExceptions;
 import com.example.couponSystem2.repositories.CompanyRepository;
 import com.example.couponSystem2.repositories.CouponRepository;
 import com.example.couponSystem2.repositories.CustomerRepository;
-import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -21,9 +20,10 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
     private static final String EMAIL = "admin@admin.com";
     private static final String PASSWORD = "admin";
 
-//    public AdminServiceImplementation(@NonNull CompanyRepository companyRepository, @NonNull CustomerRepository customerRepository, @NonNull CouponRepository couponRepository) {
-//        super(companyRepository, customerRepository, couponRepository);
-//    }
+
+    public AdminServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
+        super(companyRepository, customerRepository, couponRepository);
+    }
 
     public void deleteAll() {
         customerRepository.deleteAll();

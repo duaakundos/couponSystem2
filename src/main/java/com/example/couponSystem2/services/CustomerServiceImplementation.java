@@ -8,7 +8,7 @@ import com.example.couponSystem2.myException.enums.CustomerEnumExceptions;
 import com.example.couponSystem2.repositories.CompanyRepository;
 import com.example.couponSystem2.repositories.CouponRepository;
 import com.example.couponSystem2.repositories.CustomerRepository;
-import lombok.NonNull;
+
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -18,10 +18,12 @@ import java.util.List;
 public class CustomerServiceImplementation extends ClientService implements CustomerService{
     private int customerID;
 
-//    public CustomerServiceImplementation(@NonNull CompanyRepository companyRepository, @NonNull CustomerRepository customerRepository, @NonNull CouponRepository couponRepository, int customerID) {
-//        super(companyRepository, customerRepository, couponRepository);
-//        this.customerID = customerID;
-//    }
+
+    public CustomerServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
+        super(companyRepository, customerRepository, couponRepository);
+    }
+
+
 
     @Override
     public boolean login(String email, String password) throws SQLException, InterruptedException {
