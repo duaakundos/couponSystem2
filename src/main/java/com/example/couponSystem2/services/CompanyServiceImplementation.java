@@ -20,9 +20,9 @@ import java.util.List;
 public class CompanyServiceImplementation extends ClientService implements CompanyService {
     private int companyID;
 
+
     public CompanyServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
         super(companyRepository, customerRepository, couponRepository);
-    }
 
 
     @Override
@@ -36,7 +36,7 @@ public class CompanyServiceImplementation extends ClientService implements Compa
 
     @Override
     public Coupon addCoupon(Coupon coupon) {
-        if (couponRepository.existsCouponByCompany_IdAndTitle(coupon.getId(), coupon.getTitle()) ){
+        if (couponRepository.existsCouponByCompany_IdAndTitle(coupon.getId(), coupon.getTitle())) {
             throw new CouponSystemException(CouponEnumException.COUPON_TITLE_ALREADY_EXIST);
         }
 

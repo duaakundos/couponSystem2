@@ -20,6 +20,7 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
     private static final String EMAIL = "admin@admin.com";
     private static final String PASSWORD = "admin";
 
+
     public AdminServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
         super(companyRepository, customerRepository, couponRepository);
     }
