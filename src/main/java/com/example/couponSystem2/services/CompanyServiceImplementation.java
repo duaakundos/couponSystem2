@@ -6,6 +6,10 @@ import com.example.couponSystem2.entities.Coupon;
 import com.example.couponSystem2.myException.CouponSystemException;
 import com.example.couponSystem2.myException.enums.CompanyEnumException;
 import com.example.couponSystem2.myException.enums.CouponEnumException;
+import com.example.couponSystem2.repositories.CompanyRepository;
+import com.example.couponSystem2.repositories.CouponRepository;
+import com.example.couponSystem2.repositories.CustomerRepository;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -16,9 +20,10 @@ import java.util.List;
 public class CompanyServiceImplementation extends ClientService implements CompanyService {
     private int companyID;
 
-    public CompanyServiceImplementation(int companyID) {
-        this.companyID = companyID;
+    public CompanyServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
+        super(companyRepository, customerRepository, couponRepository);
     }
+
 
     @Override
     public boolean login(String email, String password) throws SQLException, InterruptedException {
