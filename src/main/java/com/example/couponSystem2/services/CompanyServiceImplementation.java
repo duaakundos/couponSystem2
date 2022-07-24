@@ -6,6 +6,10 @@ import com.example.couponSystem2.entities.Coupon;
 import com.example.couponSystem2.myException.CouponSystemException;
 import com.example.couponSystem2.myException.enums.CompanyEnumException;
 import com.example.couponSystem2.myException.enums.CouponEnumException;
+import com.example.couponSystem2.repositories.CompanyRepository;
+import com.example.couponSystem2.repositories.CouponRepository;
+import com.example.couponSystem2.repositories.CustomerRepository;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -16,9 +20,19 @@ import java.util.List;
 public class CompanyServiceImplementation extends ClientService implements CompanyService {
     private int companyID;
 
+//    public CompanyServiceImplementation(@NonNull CompanyRepository companyRepository, @NonNull CustomerRepository customerRepository, @NonNull CouponRepository couponRepository, int companyID) {
+//        super(companyRepository, customerRepository, couponRepository);
+//        this.companyID = companyID;
+//    }
+
+
     public CompanyServiceImplementation(int companyID) {
         this.companyID = companyID;
     }
+    public CompanyServiceImplementation() {
+        
+    }
+
 
     @Override
     public boolean login(String email, String password) throws SQLException, InterruptedException {
@@ -31,7 +45,7 @@ public class CompanyServiceImplementation extends ClientService implements Compa
 
     @Override
     public Coupon addCoupon(Coupon coupon) {
-        if (couponRepository.existsCouponByCompany_IdAndTitle(coupon.getId(), coupon.getTitle()) ){
+        if (couponRepository.existsCouponByCompany_IdAndTitle(coupon.getId(), coupon.getTitle())) {
             throw new CouponSystemException(CouponEnumException.COUPON_TITLE_ALREADY_EXIST);
         }
 
