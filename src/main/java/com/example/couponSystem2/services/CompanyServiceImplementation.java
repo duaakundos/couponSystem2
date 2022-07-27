@@ -23,7 +23,7 @@ public class CompanyServiceImplementation extends ClientService implements Compa
 
     public CompanyServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
         super(companyRepository, customerRepository, couponRepository);
-
+    }
 
     @Override
     public boolean login(String email, String password) throws SQLException, InterruptedException {

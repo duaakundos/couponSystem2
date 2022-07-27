@@ -33,12 +33,11 @@ public class AdminTest implements CommandLineRunner {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (CouponSystemException c){
+            if (c.getErrorDetails() == AdminEnumException.ADMIN_NOT_FOUND){
+                System.out.println("ADMIN_NOT_FOUND");
+            }
         }
-//        catch (CouponSystemException c){
-//            if (c.getErrorDetails() == AdminEnumException.ADMIN_NOT_FOUND){
-//                System.out.println("ADMIN_NOT_FOUND");
-//            }
-//        }
         // Success
         try {
             adminService = (AdminService) loginManager.login("admin@admin.com", "admin", ClientType.Administrator);
