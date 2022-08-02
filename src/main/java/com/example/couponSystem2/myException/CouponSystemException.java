@@ -5,11 +5,7 @@ public class CouponSystemException extends RuntimeException{
 
 
     public  CouponSystemException(ErrorDetails errorDetails){
-        System.out.println("Duaa");
-        System.out.println("errorDetails: "+errorDetails);
-        System.out.println("this.errorDetails: "+this.errorDetails);
         this.errorDetails = errorDetails;
-        System.out.println("After this.errorDetails: "+this.errorDetails);
     }
 
     public ErrorDetails getErrorDetails() {

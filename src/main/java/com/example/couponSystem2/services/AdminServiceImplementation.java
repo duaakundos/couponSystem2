@@ -75,13 +75,14 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
 
     @Override
     public Company getOneCompany(int companyID) {
-        Company company = companyRepository.findById(companyID).get();
-        //if company does not exist throw Exception,else return company
-        if (!companyRepository.existsCompanyByEmailAndPassword(company.getEmail(), company.getPassword())) {
-            throw new CouponSystemException(CompanyEnumException.COMPANY_NOT_FOUND);
-        }
-        // or add our throw like this
-        return companyRepository.findById(companyID).orElseThrow();
+//        Company company = companyRepository.findById(companyID).get();
+//        System.out.println("Tomer "+ company);
+//        //if company does not exist throw Exception,else return company
+//        if (!companyRepository.existsCompanyByEmailAndPassword(company.getEmail(), company.getPassword())) {
+//            throw new CouponSystemException(CompanyEnumException.COMPANY_NOT_FOUND);
+//        }
+////         or add our throw like this
+        return companyRepository.findById(companyID).orElseThrow(() -> new CouponSystemException(CompanyEnumException.COMPANY_NOT_FOUND));
     }
 
     @Override
@@ -121,12 +122,11 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
 
     @Override
     public Customer getOneCustomer(int customerID) {
-        Customer customer = customerRepository.findById(customerID).get();
-        //if customer does not exist throw Exception,else return customer
-        if (!customerRepository.existsCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword())) {
-            throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND);
-        }
-
-        return customerRepository.findById(customerID).get();
+//        Customer customer = customerRepository.findById(customerID).get();
+//        //if customer does not exist throw Exception,else return customer
+//        if (!customerRepository.existsCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword())) {
+//            throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND);
+//        }
+        return customerRepository.findById(customerID).orElseThrow(() -> new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND));
     }
 }
