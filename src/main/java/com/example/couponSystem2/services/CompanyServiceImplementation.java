@@ -36,10 +36,9 @@ public class CompanyServiceImplementation extends ClientService implements Compa
 
     @Override
     public Coupon addCoupon(Coupon coupon) {
-        if (couponRepository.existsCouponByCompany_IdAndTitle(coupon.getId(), coupon.getTitle())) {
+        if (couponRepository.existsCouponByCompany_IdAndTitle(companyID, coupon.getTitle())) {
             throw new CouponSystemException(CouponEnumException.COUPON_TITLE_ALREADY_EXIST);
         }
-
         Coupon couponFromDB = couponRepository.save(coupon);
         return couponFromDB;
     }
@@ -63,7 +62,7 @@ public class CompanyServiceImplementation extends ClientService implements Compa
 
     @Override
     public void deleteCoupon(Coupon coupon) {
-        if (!couponRepository.existsCouponByCompany_IdAndTitle(coupon.getId(), coupon.getTitle())) {
+        if (!couponRepository.existsCouponByCompany_IdAndTitle(companyID, coupon.getTitle())) {
             throw new CouponSystemException(CouponEnumException.COUPON_NOT_FOUND);
         }
         couponRepository.deleteById(coupon.getId());
@@ -89,7 +88,7 @@ public class CompanyServiceImplementation extends ClientService implements Compa
 
     @Override
     public List<Coupon> getCompanyCouponsMaxPrice(double maxPrice) {
-        List<Coupon> couponsList = couponRepository.getAllCouponsByCustomerByMaxPrice(companyID, maxPrice);
+        List<Coupon> couponsList = couponRepository.findAllByCompany_IdAndPriceLessThan(companyID, maxPrice);
         if (couponsList.isEmpty()) {
             System.out.println("Get all company's coupons by max price is empty");
         }
