@@ -4,6 +4,7 @@ import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Coupon;
 import com.example.couponSystem2.entities.Customer;
 import com.example.couponSystem2.myException.CouponSystemException;
+import com.example.couponSystem2.myException.enums.CouponEnumException;
 import com.example.couponSystem2.myException.enums.CustomerEnumExceptions;
 import com.example.couponSystem2.repositories.CompanyRepository;
 import com.example.couponSystem2.repositories.CouponRepository;
@@ -11,18 +12,20 @@ import com.example.couponSystem2.repositories.CustomerRepository;
 
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CustomerServiceImplementation extends ClientService implements CustomerService{
+public class CustomerServiceImplementation extends ClientService implements CustomerService {
     private int customerID;
 
 
     public CustomerServiceImplementation(CompanyRepository companyRepository, CustomerRepository customerRepository, CouponRepository couponRepository) {
         super(companyRepository, customerRepository, couponRepository);
     }
-
 
 
     @Override
@@ -36,22 +39,43 @@ public class CustomerServiceImplementation extends ClientService implements Cust
 
     @Override
     public void purchaseCoupon(Coupon coupon) {
-
+        // todo: try and return boolean in - is customer has coupon
+        int isCustomerHasCoupon = couponRepository.isCustomerHasCoupon(customerID, coupon.getId());
+        if (coupon.getAmount() == 0) {
+            throw new CouponSystemException(CouponEnumException.COUPON_OUT_OF_STOCK);
+        } else if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))) {
+            throw new CouponSystemException(CouponEnumException.COUPON_IS_EXPIRED);
+        } else if (isCustomerHasCoupon > 0) {
+            throw new CouponSystemException(CouponEnumException.CANT_PURCHASE_THE_SAME_COUPON_MORE_THAN_ONCE);
+        }
+        couponRepository.addCouponPurchase(customerID, coupon.getId());
     }
 
     @Override
     public List<Coupon> getCustomerCoupons() {
-        return null;
+        List<Coupon> PurchasedCouponsByCustomerList = couponRepository.getPurchasedCouponsByCustomer(customerID);
+        if (PurchasedCouponsByCustomerList.isEmpty()) {
+            System.out.println("Get all customers coupons list is empty");
+        }
+        return PurchasedCouponsByCustomerList;
     }
 
     @Override
     public List<Coupon> getCustomerCouponByCategory(Category category) {
-        return null;
+        List<Coupon> getCustomerCouponByCategory = couponRepository.getAllCouponsByCustomerByCategory(customerID, category.getValue());
+        if (getCustomerCouponByCategory.isEmpty()) {
+            System.out.println("Get all customers coupons list by category is empty");
+        }
+        return getCustomerCouponByCategory;
     }
 
     @Override
     public List<Coupon> getCustomerCouponByMaxPrice(double maxPrice) {
-        return null;
+        List<Coupon> getCustomerCouponByMaxPrice = couponRepository.getAllCouponsByCustomerByMaxPrice(customerID, maxPrice);
+        if (getCustomerCouponByMaxPrice.isEmpty()) {
+            System.out.println("Get all customers coupons list by max price is empty");
+        }
+        return getCustomerCouponByMaxPrice;
     }
 
     @Override
