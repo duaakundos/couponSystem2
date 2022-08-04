@@ -27,7 +27,6 @@ import java.time.Month;
 @RequiredArgsConstructor
 public class CompanyTest implements CommandLineRunner {
     private AdminService adminService;
-
     private CompanyService companyService;
     private final LoginManager loginManager;
 

@@ -39,16 +39,18 @@ public class CustomerServiceImplementation extends ClientService implements Cust
 
     @Override
     public void purchaseCoupon(Coupon coupon) {
-        // todo: try and return boolean in - is customer has coupon
-        int isCustomerHasCoupon = couponRepository.isCustomerHasCoupon(customerID, coupon.getId());
+        boolean isCustomerHasCoupon = couponRepository.isCustomerHasCoupon(customerID, coupon.getId()) == null ? false : true;
+//                =couponRepository.isCustomerHasCoupon(customerID, coupon.getId());
         if (coupon.getAmount() == 0) {
             throw new CouponSystemException(CouponEnumException.COUPON_OUT_OF_STOCK);
         } else if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))) {
             throw new CouponSystemException(CouponEnumException.COUPON_IS_EXPIRED);
-        } else if (isCustomerHasCoupon > 0) {
+        } else if (isCustomerHasCoupon == true) {
             throw new CouponSystemException(CouponEnumException.CANT_PURCHASE_THE_SAME_COUPON_MORE_THAN_ONCE);
         }
         couponRepository.addCouponPurchase(customerID, coupon.getId());
+        coupon.setAmount(coupon.getAmount() - 1);
+        couponRepository.save(coupon);
     }
 
     @Override
