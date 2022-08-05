@@ -10,6 +10,7 @@ import com.example.couponSystem2.repositories.CompanyRepository;
 import com.example.couponSystem2.repositories.CouponRepository;
 import com.example.couponSystem2.repositories.CustomerRepository;
 import lombok.NonNull;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Scope("prototype")
 public class CompanyServiceImplementation extends ClientService implements CompanyService {
     private int companyID;
 

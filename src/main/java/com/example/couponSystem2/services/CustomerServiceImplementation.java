@@ -10,6 +10,7 @@ import com.example.couponSystem2.repositories.CompanyRepository;
 import com.example.couponSystem2.repositories.CouponRepository;
 import com.example.couponSystem2.repositories.CustomerRepository;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Scope("prototype")
 public class CustomerServiceImplementation extends ClientService implements CustomerService {
     private int customerID;
 
@@ -45,7 +47,7 @@ public class CustomerServiceImplementation extends ClientService implements Cust
             throw new CouponSystemException(CouponEnumException.COUPON_OUT_OF_STOCK);
         } else if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))) {
             throw new CouponSystemException(CouponEnumException.COUPON_IS_EXPIRED);
-        } else if (isCustomerHasCoupon == true) {
+        } else if (isCustomerHasCoupon) {
             throw new CouponSystemException(CouponEnumException.CANT_PURCHASE_THE_SAME_COUPON_MORE_THAN_ONCE);
         }
         couponRepository.addCouponPurchase(customerID, coupon.getId());

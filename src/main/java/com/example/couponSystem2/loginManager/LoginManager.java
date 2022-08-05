@@ -1,32 +1,43 @@
 package com.example.couponSystem2.loginManager;
 
-import com.example.couponSystem2.oldServices.CompanyServiceOld;
-import com.example.couponSystem2.oldServices.CustomerServiceOld;
+import com.example.couponSystem2.myException.enums.CouponEnumException;
 import com.example.couponSystem2.services.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 
-@Component
+@Service
+@RequiredArgsConstructor
 @Scope("singleton")
 public class LoginManager {
 
-    @Autowired
-    CompanyServiceImplementation companyServiceImplementation;
-    @Autowired
-    CustomerServiceImplementation customerServiceImplementation;
-    @Autowired
-    AdminServiceImplementation adminServiceImplementation;
+    //    CompanyServiceImplementation companyServiceImplementation;
+//    CustomerServiceImplementation customerServiceImplementation;
+    private final AdminServiceImplementation adminServiceImplementation;
+    private final ApplicationContext ctx;
 
     public ClientService login(String email, String password, ClientType clientType) throws SQLException, InterruptedException {
-        if (clientType.equals(ClientType.Administrator) && adminServiceImplementation.login(email, password)) {
-            return adminServiceImplementation;
-        } else if (clientType.equals(ClientType.Company) && companyServiceImplementation.login(email, password)) {
-            return companyServiceImplementation;
-        } else if (clientType.equals(ClientType.Customer) && customerServiceImplementation.login(email, password)) {
-            return customerServiceImplementation;
-        } else return null;
+        ClientService clientService = null;
+        switch (clientType) {
+            case Administrator:
+                clientService = (ClientService) adminServiceImplementation;
+                break;
+            case Company:
+                clientService = (ClientService) ctx.getBean(CompanyService.class);
+                break;
+            case Customer:
+                clientService = (ClientService) ctx.getBean(CustomerService.class);
+                break;
+        }
+
+        if (!clientService.login(email, password)) {
+            // throw new CouponEnumException()
+        }
+        return clientService;
     }
 }

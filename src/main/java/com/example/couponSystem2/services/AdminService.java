@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AdminService {
     Company addCompany(Company company);
-    void updateCompany(Company company);
+    void updateCompany(int companyID,Company company);
     void deleteCompany(Company company);
     List<Company> getAllCompanies();
     Company getOneCompany(int companyID);
