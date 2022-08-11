@@ -1,5 +1,6 @@
 package com.example.couponSystem2.clr;
 
+import com.example.couponSystem2.dailyJob.CouponExpirationDailyJob;
 import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Coupon;
 import com.example.couponSystem2.myException.enums.CouponEnumException;
@@ -112,6 +113,13 @@ public class CustomerTest implements CommandLineRunner {
             companyService.deleteCoupon(coupons.get(1));
 
             System.out.println("here customer");
+
+
+            //For testing the coupon delete job
+            Thread.sleep(1000 * 40);
+            CouponExpirationDailyJob couponExpirationDailyJob = new CouponExpirationDailyJob();
+            couponExpirationDailyJob.stop();
+            System.out.println("BYE");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

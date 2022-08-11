@@ -1,7 +1,5 @@
 package com.example.couponSystem2.loginManager;
 
-import com.example.couponSystem2.oldServices.CompanyServiceOld;
-import com.example.couponSystem2.oldServices.CustomerServiceOld;
 import com.example.couponSystem2.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
