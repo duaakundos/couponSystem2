@@ -1,5 +1,6 @@
 package com.example.couponSystem2.clr;
 
+import com.example.couponSystem2.dailyJob.CouponExpirationDailyJob;
 import com.example.couponSystem2.entities.Company;
 import com.example.couponSystem2.entities.Customer;
 import com.example.couponSystem2.loginManager.ClientType;
@@ -10,6 +11,7 @@ import com.example.couponSystem2.myException.enums.CompanyEnumException;
 import com.example.couponSystem2.myException.enums.CustomerEnumExceptions;
 import com.example.couponSystem2.services.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -24,7 +26,8 @@ public class AdminTest implements CommandLineRunner {
 
     private AdminService adminService;
     private final LoginManager loginManager;
-
+    @Autowired
+    CouponExpirationDailyJob couponExpirationDailyJob;
     @Override
     public void run(String... args) throws Exception {
         loginTest();
@@ -45,9 +48,11 @@ public class AdminTest implements CommandLineRunner {
         }
         // Success
         try {
+            Thread thread = new Thread(couponExpirationDailyJob);
+            thread.start();
+
             System.out.println("****TESTING ADMIN FACADE*****");
             adminService = (AdminService) loginManager.login("admin@admin.com", "admin", ClientType.Administrator);
-            System.out.println("tomer here");
             ///////////////////////////////////////////////////////////////////////////////////////////
             Company company1 = Company.builder().name("Company_1").password("password_1").email("Company@_1").coupons(new ArrayList<>()).build();
             Company company2 = Company.builder().name("Company_2").password("password_2").email("Company@_2").coupons(new ArrayList<>()).build();
