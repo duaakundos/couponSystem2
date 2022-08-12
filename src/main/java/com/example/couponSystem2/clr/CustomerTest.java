@@ -7,6 +7,7 @@ import com.example.couponSystem2.myException.enums.CouponEnumException;
 import com.example.couponSystem2.services.CompanyService;
 import com.example.couponSystem2.services.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,8 @@ public class CustomerTest implements CommandLineRunner {
     private CompanyService companyService;
     private CustomerService customerService;
     private final LoginManager loginManager;
-
+    @Autowired
+    CouponExpirationDailyJob couponExpirationDailyJob;
     @Override
     public void run(String... args) throws Exception {
         loginTest();
@@ -117,7 +119,6 @@ public class CustomerTest implements CommandLineRunner {
 
             //For testing the coupon delete job
             Thread.sleep(1000 * 40);
-            CouponExpirationDailyJob couponExpirationDailyJob = new CouponExpirationDailyJob();
             couponExpirationDailyJob.stop();
             System.out.println("BYE");
         } catch (SQLException e) {
