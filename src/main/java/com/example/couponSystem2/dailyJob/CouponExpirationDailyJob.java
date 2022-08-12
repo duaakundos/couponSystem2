@@ -9,7 +9,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Component
 @Scope("singleton")
 @Component
 public class CouponExpirationDailyJob implements Runnable {
