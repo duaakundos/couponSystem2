@@ -48,19 +48,12 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
         return companyFromDB;
     }
 
-    // todo: also in customer
     @Override
-    public void updateCompany(int companyID, Company company) {
-        Company companyFromDB = companyRepository.findById(companyID).orElseThrow();// add exception
-
-        company.setId(companyID);
-
-
-        if (!companyFromDB.getName().equals(company.getName())){
-            // throw
+    public void updateCompany(Company company) {
+        if (companyRepository.findById(company.getId()).isEmpty()){
+            throw new CouponSystemException(CompanyEnumException.COMPANY_NOT_FOUND);
         }
-        companyRepository.save(company);
-//        companyRepository.updateCompany(company.getEmail(), company.getPassword(), company.getId());
+        companyRepository.updateCompany(company.getEmail(), company.getPassword(), company.getId());
     }
 
     @Override

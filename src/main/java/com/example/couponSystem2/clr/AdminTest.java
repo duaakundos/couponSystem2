@@ -80,10 +80,9 @@ public class AdminTest implements CommandLineRunner {
             try {
                 firstCompany.setEmail("updatingEmailCompany@_");
                 firstCompany.setPassword("updatingPassword");
-                // todo: add the company id
-//                adminService.updateCompany(firstCompany);
+                adminService.updateCompany(firstCompany);
                 // trying to update a non-existing company
-//                adminService.updateCompany(adminService.getOneCompany(999));
+                adminService.updateCompany(adminService.getOneCompany(999));
             } catch (CouponSystemException s) {
                 if (s.getErrorDetails() == CompanyEnumException.COMPANY_NOT_FOUND) {
                     System.out.println("Cannot update: company not found");
