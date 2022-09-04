@@ -1,6 +1,8 @@
 package com.example.couponSystem2.loginManager;
 
+import com.example.couponSystem2.myException.CouponSystemException;
 import com.example.couponSystem2.myException.enums.CouponEnumException;
+import com.example.couponSystem2.myException.enums.GeneralEnumException;
 import com.example.couponSystem2.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +18,14 @@ import java.sql.SQLException;
 @Scope("singleton")
 public class LoginManager {
 
-    //    CompanyServiceImplementation companyServiceImplementation;
-//    CustomerServiceImplementation customerServiceImplementation;
-    private final AdminServiceImplementation adminServiceImplementation;
+    private final AdminService adminService;
     private final ApplicationContext ctx;
 
     public ClientService login(String email, String password, ClientType clientType) throws SQLException, InterruptedException {
         ClientService clientService = null;
         switch (clientType) {
             case Administrator:
-                clientService = (ClientService) adminServiceImplementation;
+                clientService = (ClientService) adminService;
                 break;
             case Company:
                 clientService = (ClientService) ctx.getBean(CompanyService.class);
@@ -36,7 +36,7 @@ public class LoginManager {
         }
 
         if (!clientService.login(email, password)) {
-            // throw new CouponEnumException()
+            throw new CouponSystemException(GeneralEnumException.INVALID_PASSWORD_OR_EMAIL);
         }
         return clientService;
     }
