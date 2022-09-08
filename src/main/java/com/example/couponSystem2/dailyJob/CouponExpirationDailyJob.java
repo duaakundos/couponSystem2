@@ -25,7 +25,7 @@ public class CouponExpirationDailyJob implements Runnable {
         this.quit = true;
     }
 
-    public void deleteExpiredCoupons() {
+    private void deleteExpiredCoupons() {
         int numberOfDeletedRows = couponRepository.deleteAllByEndDateLessThan(Date.valueOf(LocalDate.now()));
         System.out.println("number of deleted rows: " + numberOfDeletedRows);
     }
