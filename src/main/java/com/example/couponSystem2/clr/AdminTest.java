@@ -27,7 +27,7 @@ public class AdminTest implements CommandLineRunner {
     private AdminService adminService;
     private final LoginManager loginManager;
     @Autowired
-    CouponExpirationDailyJob couponExpirationDailyJob;
+    private CouponExpirationDailyJob couponExpirationDailyJob;
     @Override
     public void run(String... args) throws Exception {
         loginTest();

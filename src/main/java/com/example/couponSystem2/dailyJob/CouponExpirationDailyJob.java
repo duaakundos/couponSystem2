@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class CouponExpirationDailyJob implements Runnable {
 
     @Autowired
-    CouponRepository couponRepository ;
+    private CouponRepository couponRepository ;
     private boolean quit = false;
     private boolean firstRun = true;
     private LocalDateTime currentTime = LocalDateTime.now();
