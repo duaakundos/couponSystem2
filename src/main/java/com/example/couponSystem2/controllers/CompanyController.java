@@ -4,28 +4,37 @@ import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Company;
 import com.example.couponSystem2.entities.Coupon;
 import com.example.couponSystem2.services.CompanyService;
+import com.example.couponSystem2.services.CompanyServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.PostUpdate;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
 @RequestMapping("api")
-public class CompanyController {
+public class CompanyController extends ClientController{
 
 
     @Autowired
-    CompanyService companyService;
+    CompanyServiceImplementation companyServiceImplementation;
 
+    @Override
+    public boolean login(String email, String password) throws SQLException, InterruptedException {
+        boolean isAuth = companyServiceImplementation.login(email,password);
+        return isAuth;
+//        ResponseEntity<Boolean> responseEntity = new ResponseEntity<>(isAuth, HttpStatus.OK);
+//        return responseEntity;
+    }
 
     @PostMapping("/addCoupon")
     @ResponseBody
     public ResponseEntity<?> addCoupon (@RequestBody Coupon coupon){
         System.out.println("Got: " + coupon);
-        Coupon addCoupon = companyService.addCoupon(coupon);
+        Coupon addCoupon = companyServiceImplementation.addCoupon(coupon);
         ResponseEntity<Coupon> responseEntity = new ResponseEntity<>(addCoupon, HttpStatus.OK);
         return responseEntity;
     }
@@ -35,7 +44,7 @@ public class CompanyController {
     @ResponseBody
     public void updateCoupon (@RequestBody Coupon coupon){
         System.out.println("Got: " + coupon);
-        companyService.updateCoupon(coupon);
+        companyServiceImplementation.updateCoupon(coupon);
 //        ResponseEntity<Coupon> responseEntity = new ResponseEntity<>(addCoupon, HttpStatus.OK);
 //        return responseEntity;
     }
@@ -45,7 +54,7 @@ public class CompanyController {
     @ResponseBody
     public void deleteCoupon (@RequestBody Coupon coupon){
         System.out.println("Got: " + coupon);
-        companyService.deleteCoupon(coupon);
+        companyServiceImplementation.deleteCoupon(coupon);
 //        ResponseEntity<Coupon> responseEntity = new ResponseEntity<>(addCoupon, HttpStatus.OK);
 //        return responseEntity;
     }
@@ -53,7 +62,7 @@ public class CompanyController {
 
     @GetMapping("/getAllCompanyCoupons")
     public ResponseEntity<?> getAllCompanyCoupons(){
-        List<Coupon> getAllCompanyCoupons = companyService.getCompanyCoupons();
+        List<Coupon> getAllCompanyCoupons = companyServiceImplementation.getCompanyCoupons();
         System.out.println("got: " + getAllCompanyCoupons);
         ResponseEntity<List<Coupon>> responseEntity = new ResponseEntity<>(getAllCompanyCoupons, HttpStatus.OK);
         return responseEntity;
@@ -62,7 +71,7 @@ public class CompanyController {
 
     @GetMapping("/getCompanyCouponsByCategory/{category}")
     public ResponseEntity<?> getCompanyCouponsByCategory(@PathVariable Category category){
-        List<Coupon> getCompanyCouponsByCategory = companyService.getCompanyCouponsByCategory(category);
+        List<Coupon> getCompanyCouponsByCategory = companyServiceImplementation.getCompanyCouponsByCategory(category);
         System.out.println("got: " + getCompanyCouponsByCategory);
         ResponseEntity<List<Coupon>> responseEntity = new ResponseEntity<>(getCompanyCouponsByCategory, HttpStatus.OK);
         return responseEntity;
@@ -71,7 +80,7 @@ public class CompanyController {
 
     @GetMapping("/getAllCompanyCoupons/{maxPrice}")
     public ResponseEntity<?> getCompanyCouponsMaxPrice(@PathVariable double maxPrice){
-        List<Coupon> getCompanyCouponsMaxPrice = companyService.getCompanyCouponsMaxPrice(maxPrice);
+        List<Coupon> getCompanyCouponsMaxPrice = companyServiceImplementation.getCompanyCouponsMaxPrice(maxPrice);
         System.out.println("got: " + getCompanyCouponsMaxPrice);
         ResponseEntity<List<Coupon>> responseEntity = new ResponseEntity<>(getCompanyCouponsMaxPrice, HttpStatus.OK);
         return responseEntity;
@@ -82,11 +91,13 @@ public class CompanyController {
 
     @GetMapping("/getCompanyDetails")
     public ResponseEntity<?> getCompanyDetails(){
-        Company company = companyService.getCompanyDetails();
+        Company company = companyServiceImplementation.getCompanyDetails();
         System.out.println("got: " + company);
         ResponseEntity<Company> responseEntity = new ResponseEntity<>(company, HttpStatus.OK);
         return responseEntity;
     }
+
+
 
 
     // todo: how will postman know what company were talking about?
