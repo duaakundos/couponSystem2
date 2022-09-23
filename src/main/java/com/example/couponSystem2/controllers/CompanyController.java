@@ -26,8 +26,6 @@ public class CompanyController extends ClientController{
     public boolean login(String email, String password) throws SQLException, InterruptedException {
         boolean isAuth = companyServiceImplementation.login(email,password);
         return isAuth;
-//        ResponseEntity<Boolean> responseEntity = new ResponseEntity<>(isAuth, HttpStatus.OK);
-//        return responseEntity;
     }
 
     @PostMapping("/addCoupon")
@@ -42,21 +40,21 @@ public class CompanyController extends ClientController{
 
     @PostUpdate
     @ResponseBody
-    public void updateCoupon (@RequestBody Coupon coupon){
+    public ResponseEntity<?> updateCoupon (@RequestBody Coupon coupon){
         System.out.println("Got: " + coupon);
         companyServiceImplementation.updateCoupon(coupon);
-//        ResponseEntity<Coupon> responseEntity = new ResponseEntity<>(addCoupon, HttpStatus.OK);
-//        return responseEntity;
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully updated coupon", HttpStatus.OK);
+        return responseEntity;
     }
 
 
     @DeleteMapping
     @ResponseBody
-    public void deleteCoupon (@RequestBody Coupon coupon){
+    public ResponseEntity<?> deleteCoupon (@RequestBody Coupon coupon){
         System.out.println("Got: " + coupon);
         companyServiceImplementation.deleteCoupon(coupon);
-//        ResponseEntity<Coupon> responseEntity = new ResponseEntity<>(addCoupon, HttpStatus.OK);
-//        return responseEntity;
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully deleted coupon", HttpStatus.OK);
+        return responseEntity;
     }
 
 
@@ -70,6 +68,7 @@ public class CompanyController extends ClientController{
 
 
     @GetMapping("/getCompanyCouponsByCategory/{category}")
+    @ResponseBody
     public ResponseEntity<?> getCompanyCouponsByCategory(@PathVariable Category category){
         List<Coupon> getCompanyCouponsByCategory = companyServiceImplementation.getCompanyCouponsByCategory(category);
         System.out.println("got: " + getCompanyCouponsByCategory);
@@ -78,7 +77,8 @@ public class CompanyController extends ClientController{
     }
 
 
-    @GetMapping("/getAllCompanyCoupons/{maxPrice}")
+    @GetMapping("/getAllCompanyCouponsByMaxPrice/{maxPrice}")
+    @ResponseBody
     public ResponseEntity<?> getCompanyCouponsMaxPrice(@PathVariable double maxPrice){
         List<Coupon> getCompanyCouponsMaxPrice = companyServiceImplementation.getCompanyCouponsMaxPrice(maxPrice);
         System.out.println("got: " + getCompanyCouponsMaxPrice);
