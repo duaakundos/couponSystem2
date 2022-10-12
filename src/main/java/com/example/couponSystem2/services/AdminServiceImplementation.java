@@ -97,10 +97,11 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
 
     @Override
     public void deleteCustomer(int customerID) {
-        Customer customer = customerRepository.findById(customerID).get();
-        if (!customerRepository.existsCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword())) {
-            throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND);
-        }
+        customerRepository.findById(customerID).orElseThrow(() -> new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND));
+//        System.out.println("tomer 2" + customer);
+//        if (!customerRepository.existsCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword())) {
+//            throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND);
+//        }
         customerRepository.deleteById(customerID);
     }
 
