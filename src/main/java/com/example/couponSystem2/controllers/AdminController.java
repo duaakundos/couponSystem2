@@ -111,6 +111,7 @@ public class AdminController extends ClientController{
 
     @Override
     public boolean login(String email, String password) throws SQLException, InterruptedException {
-        return false;
+        boolean isAuth = adminServiceImplementation.login(email,password);
+        return isAuth;
     }
 }
