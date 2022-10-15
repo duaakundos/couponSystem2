@@ -38,7 +38,7 @@ public class CompanyController extends ClientController{
     }
 
 
-    @PostUpdate
+    @PostMapping("/updateCoupon")
     @ResponseBody
     public ResponseEntity<?> updateCoupon (@RequestBody Coupon coupon){
         System.out.println("Got: " + coupon);
@@ -48,7 +48,7 @@ public class CompanyController extends ClientController{
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("/DeleteCoupon")
     @ResponseBody
     public ResponseEntity<?> deleteCoupon (@RequestBody Coupon coupon){
         System.out.println("Got: " + coupon);
@@ -97,9 +97,4 @@ public class CompanyController extends ClientController{
         return responseEntity;
     }
 
-
-
-
-    // todo: how will postman know what company were talking about?
-    //todo: postman returns company coupons list empty.. because again it doesnt know which one..
 }

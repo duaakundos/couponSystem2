@@ -1,0 +1,66 @@
+Company Controller
+
+
+Post
+    addCoupon
+    http://localhost:8888/api/addCoupon
+    {
+             "category": "FOOD",
+             "title": "Purchasing Coupon Title",
+             "description": "Purchasing Coupon description",
+             "startDate": "2022-10-03",
+             "endDate": "2022-12-03",
+             "amount": 35,
+             "price": 3000.0,
+             "image": null
+     }
+
+
+
+Post
+    updateCoupon
+    http://localhost:8888/api/updateCoupon
+    {
+             "category": "FOOD",
+             "title": "Updating Purchasing Coupon Title",
+             "description": "Updating Purchasing Coupon description",
+             "startDate": "2022-10-03",
+             "endDate": "2022-12-03",
+             "amount": 35,
+             "price": 3000.0,
+             "image": null
+     }
+
+
+
+Delete
+    deleteCoupon
+        http://localhost:8888/api/deleteCoupon
+        {
+              "id":10
+              "category": "VACATION",
+              "title": "Title_4",
+              "description": "Description_4",
+              "startDate": "2022-10-15",
+              "endDate": "2022-10-17",
+              "amount": 89,
+              "price": 50.0,
+              "image": null
+        }
+
+
+Get
+    getAllCompanyCoupons
+        http://localhost:8888/api/getAllCompanyCoupons
+
+Get
+    getCompanyCouponsByCategory
+        http://localhost:8888/api/getCompanyCouponsByCategory/food
+
+get
+    getCompanyCouponsByMaxPrice
+        http://localhost:8888/api/getAllCompanyCouponsByMaxPrice/500
+
+get
+    getCompanyDetails
+        http://localhost:8888/api/getCompanyDetails
