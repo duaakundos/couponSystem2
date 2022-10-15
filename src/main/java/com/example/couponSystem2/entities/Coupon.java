@@ -1,5 +1,6 @@
 package com.example.couponSystem2.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -48,6 +49,7 @@ public class Coupon {
             joinColumns = @JoinColumn(name = "coupon_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id"))
     @ToString.Exclude
+    @JsonIgnoreProperties({"coupons", "hibernateLazyInitializer"})
     private List<Customer> customersList;
 
 

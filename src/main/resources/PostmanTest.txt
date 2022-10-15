@@ -1,0 +1,134 @@
+Admin Controller
+
+Post
+    addCompany
+    http://localhost:8888/api/addCompany
+        {
+            "id": 101,
+            "name": "Company_101",
+            "email": "Company@_101",
+            "password": "Company_100Password",
+            "coupons": [
+                {
+                    "id": 30,
+                    "category": "FOOD",
+                    "title": "Title",
+                    "description": "description",
+                    "startDate": "2022-08-03",
+                    "endDate": "2022-11-03",
+                    "amount": 300,
+                    "price": 10000.0,
+                    "image": null
+                }
+            ]
+        }
+
+
+Post
+    updateCompany
+    http://localhost:8888/api/updateCompany
+        {
+            "id": 1,
+            "name": "Company_1011",
+            "email": "Company@_1011",
+            "password": "Company_100Passwor11",
+            "coupons": []
+        }
+
+Delete
+    deleteCompany
+        http://localhost:8888/api/deleteCompany
+        {
+            "id": 1,
+            "name": "Company_1011",
+            "email": "Company@_1011",
+            "password": "Company_100Passwor11",
+            "coupons": []
+        }
+
+Get
+    getOneCompany
+        http://localhost:8888/api/getOneCompanyByID/1
+
+Get
+    getAllCompanies
+        http://localhost:8888/api/getAllCompanies
+
+Get
+    getOneCompanyByID
+        http://localhost:8888/api/getOneCompanyByID/1
+
+
+Post
+     addCustomer
+        http://localhost:8888/api/addCustomer
+        {
+            "id": 122,
+            "firstName": "customer_1221",
+            "lastName": "dov_1221",
+            "email": "customerUpdate@1122",
+            "password": "updatePassword1122"
+        }
+    OR
+        {
+            "id": 12,
+            "firstName": "customer_121",
+            "lastName": "dov_121",
+            "email": "customerUpdate@112",
+            "password": "updatePassword112",
+            "coupons": [
+                {
+                    "id": 7,
+                    "category": "FOOD",
+                    "title": "update Title",
+                    "description": "update description",
+                    "startDate": "2022-08-03",
+                    "endDate": "2022-11-03",
+                    "amount": 30,
+                    "price": 1000.0,
+                    "image": null
+                },
+                {
+                    "id": 10,
+                    "category": "VACATION",
+                    "title": "Title_42",
+                    "description": "Description_4",
+                    "startDate": "2022-10-12",
+                    "endDate": "2022-10-14",
+                    "amount": 89,
+                    "price": 50.0,
+                    "image": null
+                }
+            ]
+        }
+
+
+Post
+updateCustomer
+        http://localhost:8888/api/updateCustomer
+             {
+                        "id": 6,
+                        "firstName": "customer_12w21",
+                        "lastName": "dov_12221",
+                        "email": "customerUpdate@13122",
+                        "password": "updatePassword11122"
+                    }
+
+
+Delete
+    deleteCustomer
+      http://localhost:8888/api/deleteCustomer
+        {
+            "id": 16,
+            "firstName": "customer_1221",
+            "lastName": "dov_1221",
+            "email": "customerUpdate@1122",
+            "password": "updatePassword1122"
+        }
+Get
+    getOneCustomerByID
+        http://localhost:8888/api/getOneCustomerByID/2
+
+Get
+    getAllCustomers
+        http://localhost:8888/api/getAllCustomers

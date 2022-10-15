@@ -1,5 +1,6 @@
 package com.example.couponSystem2.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Customer {
     @JoinTable(name = "customer_list_of_coupons",
             joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "coupon_id"))
+    @JsonIgnoreProperties({"company","customersList", "hibernateLazyInitializer"})
     @ToString.Exclude
     private List<Coupon> coupons;
 
