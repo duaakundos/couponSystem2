@@ -1,0 +1,33 @@
+Customer Controller
+
+
+Post
+    PurchaseCoupon
+    http://localhost:8888/api/purchaseCoupon
+     {
+             "id": 7,
+             "category": "FOOD",
+             "title": "update Title",
+             "description": "update description",
+             "startDate": "2022-08-03",
+             "endDate": "2022-11-03",
+             "amount": 30,
+             "price": 1000.0,
+             "image": null
+      }
+
+Get
+    getAllCustomerCoupons
+        http://localhost:8888/api/getAllCustomerCoupons
+
+Get
+    getCustomerCouponsByCategory
+        http://localhost:8888/api/getCustomerCouponsByCategory/food
+
+get
+    getCustomerCouponsByMaxPrice
+        http://localhost:8888/api/getCustomerCouponsByMaxPrice/500
+
+get
+    getCustomerDetails
+        http://localhost:8888/api/getCustomerDetails
