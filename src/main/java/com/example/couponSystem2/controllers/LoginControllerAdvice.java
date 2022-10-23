@@ -1,6 +1,5 @@
 package com.example.couponSystem2.controllers;
 
-import com.example.couponSystem2.controllers.main.CustomerController;
 import com.example.couponSystem2.myException.CouponSystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackageClasses = {CustomerController.class})
+@RestControllerAdvice(basePackageClasses = {LoginController.class})
 @RestController
-public class CustomerControllerAdvise {
+public class LoginControllerAdvice {
+
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ErrorDetails> handle(Exception e) {
         ErrorDetails error = new ErrorDetails("Custom Error", e.getMessage());

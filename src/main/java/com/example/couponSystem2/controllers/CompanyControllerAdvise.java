@@ -1,5 +1,6 @@
 package com.example.couponSystem2.controllers;
 
+import com.example.couponSystem2.controllers.main.CompanyController;
 import com.example.couponSystem2.myException.CouponSystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

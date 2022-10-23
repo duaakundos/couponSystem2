@@ -1,0 +1,7 @@
+package com.example.couponSystem2.myException;
+
+public class AuthorizationException  extends RuntimeException {
+    public AuthorizationException(String message) {
+        super(message);
+    }
+}

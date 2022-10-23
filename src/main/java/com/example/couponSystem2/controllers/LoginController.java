@@ -41,7 +41,7 @@ public class LoginController extends ClientController {
             isAuth = customerServiceImplementation.login(authDetails.getEmail(), authDetails.getPassword());
         }
         if (isAuth) {
-            String token = tokensManager.getToken(authDetails).getToken();
+            String token = tokensManager.createToken(authDetails).getToken();
             System.out.println("token name: " + token);
             ResponseEntity<String> responseEntity = new ResponseEntity<>(token, HttpStatus.OK);
             return responseEntity;
