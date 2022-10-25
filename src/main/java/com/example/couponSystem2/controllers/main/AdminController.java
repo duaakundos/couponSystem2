@@ -1,9 +1,8 @@
-package com.example.couponSystem2.controllers;
+package com.example.couponSystem2.controllers.main;
 
 
 import com.example.couponSystem2.entities.Company;
 import com.example.couponSystem2.entities.Customer;
-import com.example.couponSystem2.tokensManager.AuthDetails;
 import com.example.couponSystem2.services.AdminServiceImplementation;
 import com.example.couponSystem2.tokensManager.TokensManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +18,13 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AdminController {
     @Autowired
-    AdminServiceImplementation adminServiceImplementation;
-
-    @Autowired
     TokensManager tokensManager;
 
     @PostMapping("/addCompany")
     @ResponseBody
-    public ResponseEntity<?> addCompany(@RequestBody Company company) {
+    public ResponseEntity<?> addCompany(@RequestBody Company company, @RequestHeader("token") String token) {
         System.out.println("Got: " + company);
-        Company companyID = adminServiceImplementation.addCompany(company);
+        Company companyID = ((AdminServiceImplementation) tokensManager.getService(token)).addCompany(company);
         ResponseEntity<Company> responseEntity = new ResponseEntity<>(companyID, HttpStatus.OK);
         return responseEntity;
     }
@@ -36,32 +32,33 @@ public class AdminController {
     @PostMapping("/updateCompany")
 //    @PostUpdate
     @ResponseBody
-    public ResponseEntity<?> updateCompany(@RequestBody Company company) {
+    public ResponseEntity<?> updateCompany(@RequestBody Company company, @RequestHeader("token") String token) {
         System.out.println("Got: " + company);
-        adminServiceImplementation.updateCompany(company);
+        ((AdminServiceImplementation) tokensManager.getService(token)).updateCompany(company);
         ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully updated company", HttpStatus.OK);
         return responseEntity;
     }
 
     @DeleteMapping("/deleteCompany") //
     @ResponseBody
-    public ResponseEntity<?> deleteCompany(@RequestBody Company company) {
-        adminServiceImplementation.deleteCompany(company);
+    public ResponseEntity<?> deleteCompany(@RequestBody Company company, @RequestHeader("token") String token) {
+        ((AdminServiceImplementation) tokensManager.getService(token)).deleteCompany(company);
         System.out.println("delete company: " + company);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
     @GetMapping("/getAllCompanies")
-    public ResponseEntity<?> getAllCompanies() {
-        List<Company> companyListFromDB = adminServiceImplementation.getAllCompanies();
+    public ResponseEntity<?> getAllCompanies(@RequestHeader("token") String token) {
+        System.out.println("myToken: " + token);
+        List<Company> companyListFromDB = ((AdminServiceImplementation) tokensManager.getService(token)).getAllCompanies();
         System.out.println("got: " + companyListFromDB);
         ResponseEntity<List<Company>> responseEntity = new ResponseEntity<>(companyListFromDB, HttpStatus.OK);
         return responseEntity;
     }
 
     @GetMapping("/getOneCompanyByID/{id}")
-    public ResponseEntity<?> getOneCompany(@PathVariable int id) {
-        Company companyFromDB = adminServiceImplementation.getOneCompany(id);
+    public ResponseEntity<?> getOneCompany(@PathVariable int id, @RequestHeader("token") String token) {
+        Company companyFromDB = ((AdminServiceImplementation) tokensManager.getService(token)).getOneCompany(id);
         System.out.println("got: " + companyFromDB);
         ResponseEntity<Company> responseEntity = new ResponseEntity<>(companyFromDB, HttpStatus.OK);
         return responseEntity;
@@ -70,69 +67,44 @@ public class AdminController {
 
     @PostMapping("/addCustomer")
     @ResponseBody
-    public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<?> addCustomer(@RequestBody Customer customer, @RequestHeader("token") String token) {
         System.out.println("Got: " + customer);
-        Customer customerID = adminServiceImplementation.addCustomer(customer);
+        Customer customerID = ((AdminServiceImplementation) tokensManager.getService(token)).addCustomer(customer);
         ResponseEntity<Customer> responseEntity = new ResponseEntity<>(customerID, HttpStatus.OK);
         return responseEntity;
     }
 
     @PostMapping("/updateCustomer")
-//    @PostUpdate
     @ResponseBody
-    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<?> updateCustomer(@RequestBody Customer customer, @RequestHeader("token") String token) {
         System.out.println("Got: " + customer);
-        adminServiceImplementation.updateCustomer(customer);
+        ((AdminServiceImplementation) tokensManager.getService(token)).updateCustomer(customer);
         ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully updated customer", HttpStatus.OK);
         return responseEntity;
     }
 
     @DeleteMapping("/deleteCustomer")
     @ResponseBody
-    public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer) {
-        adminServiceImplementation.deleteCustomer(customer.getId());
+    public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer, @RequestHeader("token") String token) {
+        ((AdminServiceImplementation) tokensManager.getService(token)).deleteCustomer(customer.getId());
         System.out.println("delete customer: " + customer);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
     @GetMapping("/getAllCustomers")
-    public ResponseEntity<?> getAllCustomers() {
-        List<Customer> customerListFromDB = adminServiceImplementation.getAllCustomers();
+    public ResponseEntity<?> getAllCustomers(@RequestHeader("token") String token) {
+        List<Customer> customerListFromDB = ((AdminServiceImplementation) tokensManager.getService(token)).getAllCustomers();
         System.out.println("got: " + customerListFromDB);
         ResponseEntity<List<Customer>> responseEntity = new ResponseEntity<>(customerListFromDB, HttpStatus.OK);
         return responseEntity;
     }
 
     @GetMapping("/getOneCustomerByID/{id}")
-    public ResponseEntity<?> getOneCustomer(@PathVariable int id) {
-        Customer customerFromDB = adminServiceImplementation.getOneCustomer(id);
+    public ResponseEntity<?> getOneCustomer(@PathVariable int id, @RequestHeader("token") String token) {
+        Customer customerFromDB = ((AdminServiceImplementation) tokensManager.getService(token)).getOneCustomer(id);
         System.out.println("got: " + customerFromDB);
         ResponseEntity<Customer> responseEntity = new ResponseEntity<>(customerFromDB, HttpStatus.OK);
         return responseEntity;
     }
 
-//    @Override
-//    public boolean login(String email, String password) throws SQLException, InterruptedException {
-//        boolean isAuth = adminServiceImplementation.login(email, password);
-//        String token = tokensManager.getToken().getToken();
-//        System.out.println("token name: " + token);
-//        return isAuth;
-//    }
-
-//    @Override
-//    @PostMapping("/login2")
-//    public ResponseEntity<?> login(@RequestBody AuthDetails authDetails) throws SQLException, InterruptedException {
-//        System.out.println("here from web");
-//        System.out.println(authDetails.getEmail());
-//        System.out.println(authDetails.getPassword());
-//        System.out.println(authDetails.getUserType());
-//        boolean isAuth = adminServiceImplementation.login(authDetails.getEmail(), authDetails.getPassword());
-//        if (isAuth){
-//            String token = tokensManager.getToken(authDetails).getToken();
-//            System.out.println("token name: " + token);
-//            ResponseEntity<String> responseEntity = new ResponseEntity<>(token, HttpStatus.OK);
-//            return responseEntity;
-//        }
-//        return null;
-//    }
 }

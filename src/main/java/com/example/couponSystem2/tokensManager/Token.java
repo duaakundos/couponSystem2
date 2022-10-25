@@ -1,16 +1,10 @@
 package com.example.couponSystem2.tokensManager;
-
-import com.example.couponSystem2.loginManager.LoginManager;
-import com.example.couponSystem2.services.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -21,11 +15,12 @@ public class Token {
     private LocalDateTime startSessionTime = LocalDateTime.now();
     private LocalDateTime endSessionTime = startSessionTime.plusMinutes(sessionDurationInMinutes);
     private AuthDetails authDetails;
-//    LoginManager loginManager; //= new LoginManager(adminService,ctx);
 
     public Token(AuthDetails authDetails) throws SQLException, InterruptedException {
         this.authDetails = authDetails;
-//        getService();
+    }
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getToken() {
@@ -40,9 +35,17 @@ public class Token {
         return authDetails;
     }
 
-//        public ClientService getService() throws SQLException, InterruptedException {
-////        LoginManager loginManager1 = new LoginManager()
-//        System.out.println("print login manager" + loginManager);
-//                    return loginManager.login(authDetails.getEmail(),authDetails.getPassword(),authDetails.getClientType());
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Token token1 = (Token) o;
+        return token.equals(token1.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(token);
+    }
+
 }
