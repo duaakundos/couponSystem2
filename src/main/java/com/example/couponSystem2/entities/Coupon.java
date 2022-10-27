@@ -1,5 +1,6 @@
 package com.example.couponSystem2.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -20,22 +21,18 @@ public class Coupon {
     @GeneratedValue
     @Column(name = "coupon_id")
     private int id;
-//    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @ManyToOne(targetEntity = Company.class,fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Company.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
-    // todo: shaked wanted to know why we changed back to company instead of int id
+    @JsonIgnore
     private Company company;
-//    private int company_id;
     @Column(name = "coupon_category_id")
     private Category category;
     @Column(name = "coupon_title")
     private String title;
     @Column(name = "coupon_description")
     private String description;
-//    @Temporal(value = TemporalType.DATE)
     @Column(name = "start_date")
     private java.sql.Date startDate;
-//    @Temporal(value = TemporalType.DATE)
     @Column(name = "end_date")
     private java.sql.Date endDate;
     @Column(name = "coupon_amount")
@@ -49,7 +46,7 @@ public class Coupon {
             joinColumns = @JoinColumn(name = "coupon_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id"))
     @ToString.Exclude
-    @JsonIgnoreProperties({"coupons", "hibernateLazyInitializer"})
+    @JsonIgnore
     private List<Customer> customersList;
 
 
