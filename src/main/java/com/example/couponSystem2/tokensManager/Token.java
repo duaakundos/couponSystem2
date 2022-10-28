@@ -10,7 +10,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class Token {
     private static int TOKEN_COUNTER = 1;
-    private int sessionDurationInMinutes = 1; //30 minutes
+    private int sessionDurationInMinutes = 10; //30 minutes
     private String token = "token_" + (TOKEN_COUNTER++) + "_" + Math.random() * Math.random();
     private LocalDateTime startSessionTime = LocalDateTime.now();
     private LocalDateTime endSessionTime = startSessionTime.plusMinutes(sessionDurationInMinutes);
