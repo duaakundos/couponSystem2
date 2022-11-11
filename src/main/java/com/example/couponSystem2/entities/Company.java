@@ -1,5 +1,6 @@
 package com.example.couponSystem2.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class Company {
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY,
     cascade = CascadeType.ALL)
     @ToString.Exclude
-    @JsonIgnoreProperties({"company","customersList", "hibernateLazyInitializer"})
+    @JsonIgnore
     private List<Coupon> coupons;
 
 }

@@ -28,13 +28,20 @@ public class MyAspect {
     @Autowired
     TokensManager tokensManager;
 
-    @Before(value = "execution(* com.example.couponSystem2.controllers.main.*.*(..)) && args(token)")
-    public void handleIsSessionTokenExists(JoinPoint joinPoint, String token) {
+    // && args(token) , String token
+    @Before(value = "execution(* com.example.couponSystem2.controllers.main.*.*(..))")
+    public void handleIsSessionTokenExists(JoinPoint joinPoint) {
+        String token = "";
+        for (int i = 0; i < joinPoint.getArgs().length; i++) {
+            if (joinPoint.getArgs()[i] instanceof String && ((String) joinPoint.getArgs()[i]).contains("token")) {
+                System.out.println("my Token " + joinPoint.getArgs()[i]);
+                token = joinPoint.getArgs()[i].toString();
+            }
+        }
         System.out.println("Aspect isSessionTokenExists: " + tokensManager.isSessionTokenExists(token));
         if (!tokensManager.isSessionTokenExists(token)) {
             System.out.println("Throwing Exception");
             throw new AuthorizationException(GeneralEnumException.SESSION_EXPIRED.toString());
         }
     }
-
 }
