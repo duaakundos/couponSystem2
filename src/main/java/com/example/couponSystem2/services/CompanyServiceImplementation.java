@@ -41,16 +41,24 @@ public class CompanyServiceImplementation extends ClientService implements Compa
         if (couponRepository.existsCouponByCompany_IdAndTitle(companyID, coupon.getTitle())) {
             throw new CouponSystemException(CouponEnumException.COUPON_TITLE_ALREADY_EXIST);
         }
+        Company company = new Company();
+        company.setId(companyID);
+        coupon.setCompany(company);
         Coupon couponFromDB = couponRepository.save(coupon);
+        System.out.println("couponFromDB: " + couponFromDB + "company id: " + companyID );
         return couponFromDB;
     }
 
     @Override
     public void updateCoupon(Coupon coupon) {
 
+        Company company = new Company();
+        company.setId(companyID);
+        coupon.setCompany(company);
         if (coupon.getCompany().getId() != companyID) {
             throw new CouponSystemException(CompanyEnumException.CANT_UPDATE_COMPANY_ID);
         }
+        System.out.println("tomer service iml 2: "+ coupon);
         couponRepository.updateCoupon(
                 coupon.getTitle(),
                 coupon.getDescription(),

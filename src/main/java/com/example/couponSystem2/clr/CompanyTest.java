@@ -96,7 +96,7 @@ public class CompanyTest implements CommandLineRunner {
             System.out.println("****TESTING UPDATE COUPON****");
             Coupon firstCompanyCoupon = companyService.getCompanyCoupons().get(0);
             firstCompanyCoupon.setStartDate(Date.valueOf(LocalDate.of(2022, Month.AUGUST, 3)));
-            firstCompanyCoupon.setEndDate(Date.valueOf(LocalDate.of(2022, Month.NOVEMBER, 3)));
+            firstCompanyCoupon.setEndDate(Date.valueOf(LocalDate.of(2023, Month.NOVEMBER, 3)));
             firstCompanyCoupon.setCategory(Category.ELECTRICITY);
             firstCompanyCoupon.setDescription("update description");
             firstCompanyCoupon.setTitle("update Title");

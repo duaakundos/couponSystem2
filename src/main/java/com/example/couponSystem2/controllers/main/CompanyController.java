@@ -57,6 +57,7 @@ public class CompanyController {
         List<Coupon> getAllCompanyCoupons = ((CompanyServiceImplementation) tokensManager.getService(token)).getCompanyCoupons();
         System.out.println("got: " + getAllCompanyCoupons);
         ResponseEntity<List<Coupon>> responseEntity = new ResponseEntity<>(getAllCompanyCoupons, HttpStatus.OK);
+        System.out.println("resopnse: " + responseEntity);
         return responseEntity;
     }
 
