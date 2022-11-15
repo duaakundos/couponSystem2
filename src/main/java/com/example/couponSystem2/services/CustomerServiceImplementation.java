@@ -88,4 +88,10 @@ public class CustomerServiceImplementation extends ClientService implements Cust
         customer.setCoupons(getCustomerCoupons());
         return customer;
     }
+
+    @Override
+    public List<Coupon> getAllCoupons() {
+        List<Coupon> getAllCoupons = couponRepository.findAll();
+        return getAllCoupons;
+    }
 }

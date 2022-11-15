@@ -66,4 +66,15 @@ public class CustomerController {
         return responseEntity;
     }
 
+    @GetMapping("/getAllCoupons")
+    @ResponseBody
+    public ResponseEntity<?> getAllCoupons(@RequestHeader("token") String token) {
+        List<Coupon> getAllCoupons = ((CustomerServiceImplementation) tokensManager.getService(token)).getAllCoupons();
+        System.out.println("got: " + getAllCoupons);
+        ResponseEntity<List<Coupon>> responseEntity = new ResponseEntity<>(getAllCoupons, HttpStatus.OK);
+        return responseEntity;
+    }
+
+
+
 }

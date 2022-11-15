@@ -12,4 +12,6 @@ public interface CustomerService {
     List<Coupon> getCustomerCouponByCategory(Category category);
     List<Coupon> getCustomerCouponByMaxPrice(double maxPrice);
     Customer getCustomerDetails();
+    List<Coupon> getAllCoupons();
+
 }
