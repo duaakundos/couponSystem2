@@ -21,6 +21,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Order(2)
@@ -67,12 +69,17 @@ public class CompanyTest implements CommandLineRunner {
             Date startDateMinusDays = Date.valueOf(LocalDate.now().minusDays(2));
             Date endDateMinusDays = Date.valueOf(LocalDate.now().minusDays(1));
             Company company = adminService.getAllCompanies().get(0);
-            Coupon coupon1 = Coupon.builder().company(company).category(Category.FOOD).title("Title_1").description("Description_1").startDate(startDate).endDate(endDate).amount(31).price(10).build();
-            Coupon coupon2 = Coupon.builder().company(company).category(Category.ELECTRICITY).title("Title_2").description("Description_2").startDate(startDate).endDate(endDate).amount(302).price(60).build();
-            Coupon coupon3 = Coupon.builder().company(company).category(Category.RESTAURANT).title("Title_3").description("Description_3").startDate(startDate).endDate(endDate).amount(50).price(200).build();
-            Coupon coupon4 = Coupon.builder().company(company).category(Category.VACATION).title("Title_4").description("Description_4").startDate(startDate).endDate(endDate).amount(90).price(50).build();
-            Coupon coupon5 = Coupon.builder().company(company).category(Category.RESTAURANT).title("Title_5").description("Description_5").startDate(startDateMinusDays).endDate(endDateMinusDays).amount(50).price(200).build();
-            Coupon coupon6 = Coupon.builder().company(company).category(Category.VACATION).title("Title_6").description("Description_6").startDate(startDateMinusDays).endDate(endDateMinusDays).amount(90).price(50).build();
+            Coupon coupon1 = Coupon.builder().company(company).category(Category.FOOD).title("Title_1").description("Description_1").startDate(startDate).endDate(endDate).amount(31).price(10).image("https://cdn.pixabay.com/photo/2013/07/13/14/00/rocker-161936__340.png").build();
+            Coupon coupon2 = Coupon.builder().company(company).category(Category.ELECTRICITY).title("Title_2").description("Description_2").startDate(startDate).endDate(endDate).amount(302).price(60).image("https://cdn.pixabay.com/photo/2016/04/19/15/23/teddy-1338895__340.jpg").build();
+            Coupon coupon3 = Coupon.builder().company(company).category(Category.RESTAURANT).title("Title_3").description("Description_3").startDate(startDate).endDate(endDate).amount(50).price(200).image("https://cdn.pixabay.com/photo/2016/04/19/15/23/teddy-1338895__340.jpg").build();
+            Coupon coupon4 = Coupon.builder().company(company).category(Category.VACATION).title("Title_4").description("Description_4").startDate(startDate).endDate(endDate).amount(90).price(50).image("https://cdn.pixabay.com/photo/2016/04/19/15/23/teddy-1338895__340.jpg").build();
+            Coupon coupon5 = Coupon.builder().company(company).category(Category.RESTAURANT).title("Title_5").description("Description_5").startDate(startDateMinusDays).endDate(endDateMinusDays).amount(50).price(200).image("https://cdn.pixabay.com/photo/2016/04/19/15/23/teddy-1338895__340.jpg").build();
+            Coupon coupon6 = Coupon.builder().company(company).category(Category.VACATION).title("Title_6").description("Description_6").startDate(startDateMinusDays).endDate(endDateMinusDays).amount(90).price(50).image("https://cdn.pixabay.com/photo/2016/04/19/15/23/teddy-1338895__340.jpg").build();
+            List<Coupon> couponList = new ArrayList<>();
+            for (int i = 0; i < 30; i++) {
+                couponList.add(Coupon.builder().company(company).category(Category.valueOf((int)(Math.random()*3)+1)).title("Title_"+(i+7)).description("Description_"+(i+7)).startDate(startDate).endDate(endDate).amount((int) ((Math.random()*3000)+1)).price((int) (Math.random()*3000)+1).image("https://cdn.pixabay.com/photo/2016/04/19/15/23/teddy-1338895__340.jpg").build());
+             }
+            System.out.println("couponList.get(7): " + couponList.get(7));
             /////////////////////////////////////////////////////////////////////////////////////////
             companyService = (CompanyService)
                     loginManager.login(company.getEmail(),
@@ -85,6 +92,10 @@ public class CompanyTest implements CommandLineRunner {
                 companyService.addCoupon(coupon4);
                 companyService.addCoupon(coupon5);
                 companyService.addCoupon(coupon6);
+                companyService.addCoupon(couponList.get(7));
+                for (int i = 0; i < 30; i++) {
+                    companyService.addCoupon(couponList.get(i)) ;
+                }
                 // trying to add a coupon with similar title
                 companyService.addCoupon(coupon6);
             } catch (CouponSystemException s) {
