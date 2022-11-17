@@ -26,7 +26,7 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into customer_list_of_coupons (CUSTOMER_ID, COUPON_ID) values (?1,?2) ", nativeQuery = true)
+    @Query(value = "insert into customer_list_of_coupons (customer_id, coupon_id) values (?1,?2) ", nativeQuery = true)
     void addCouponPurchase(int customerID, int couponID);
 
     @Transactional
@@ -53,13 +53,13 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
             "c.coupon_image = :coupon_image " +
             "where c.coupon_id = :coupon_ID", nativeQuery = true)
     Integer updateCoupon(@Param("coupon_title") String coupon_title,
-                      @Param("coupon_description") String coupon_description,
-                      @Param("coupon_start_date") java.sql.Date start_date,
-                      @Param("coupon_end_date") java.sql.Date end_date,
-                      @Param("coupon_amount") int coupon_amount,
-                      @Param("coupon_price") double coupon_price,
-                      @Param("coupon_image") String coupon_image,
-                      @Param("coupon_ID") int couponID);
+                         @Param("coupon_description") String coupon_description,
+                         @Param("coupon_start_date") java.sql.Date start_date,
+                         @Param("coupon_end_date") java.sql.Date end_date,
+                         @Param("coupon_amount") int coupon_amount,
+                         @Param("coupon_price") double coupon_price,
+                         @Param("coupon_image") String coupon_image,
+                         @Param("coupon_ID") int couponID);
 
 
     @Transactional
@@ -72,6 +72,10 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 //    boolean isCustomerHasCoupon(@Param("customerID") int customerID,@Param("couponID") int couponID);
 
     @Query(value = "SELECT* FROM customer_list_of_coupons where customer_id = :customerID and coupon_id = :couponID", nativeQuery = true)
-    Integer isCustomerHasCoupon(@Param("customerID") int customerID,@Param("couponID") int couponID);
+    Integer isCustomerHasCoupon(@Param("customerID") int customerID, @Param("couponID") int couponID);
+
+
+    @Query(value = "SELECT * FROM coupons where coupon_title = :couponTitle", nativeQuery = true)
+    Coupon getCouponbyCoupon(@Param("couponTitle") String couponTitle);
 
 }

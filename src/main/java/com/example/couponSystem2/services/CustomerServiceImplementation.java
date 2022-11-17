@@ -42,7 +42,6 @@ public class CustomerServiceImplementation extends ClientService implements Cust
     @Override
     public void purchaseCoupon(Coupon coupon) {
         boolean isCustomerHasCoupon = couponRepository.isCustomerHasCoupon(customerID, coupon.getId()) == null ? false : true;
-//                =couponRepository.isCustomerHasCoupon(customerID, coupon.getId());
         if (coupon.getAmount() == 0) {
             throw new CouponSystemException(CouponEnumException.COUPON_OUT_OF_STOCK);
         } else if (coupon.getEndDate().before(Date.valueOf(LocalDate.now()))) {
@@ -52,7 +51,14 @@ public class CustomerServiceImplementation extends ClientService implements Cust
         }
         couponRepository.addCouponPurchase(customerID, coupon.getId());
         coupon.setAmount(coupon.getAmount() - 1);
-        couponRepository.save(coupon);
+        couponRepository.updateCoupon( coupon.getTitle(),
+                coupon.getDescription(),
+                coupon.getStartDate(),
+                coupon.getEndDate(),
+                coupon.getAmount(),
+                coupon.getPrice(),
+                coupon.getImage(),
+                coupon.getId());
     }
 
     @Override
