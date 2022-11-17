@@ -1,7 +1,9 @@
 package com.example.couponSystem2.clr;
 
 import com.example.couponSystem2.dailyJob.CouponExpirationDailyJob;
+import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Company;
+import com.example.couponSystem2.entities.Coupon;
 import com.example.couponSystem2.entities.Customer;
 import com.example.couponSystem2.loginManager.ClientType;
 import com.example.couponSystem2.loginManager.LoginManager;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Order(1)
@@ -54,19 +57,29 @@ public class AdminTest implements CommandLineRunner {
             System.out.println("****TESTING ADMIN FACADE*****");
             adminService = (AdminService) loginManager.login("admin@admin.com", "admin", ClientType.Administrator);
             ///////////////////////////////////////////////////////////////////////////////////////////
-            Company company1 = Company.builder().name("Company_1").password("password_1").email("Company@_1").coupons(new ArrayList<>()).build();
-            Company company2 = Company.builder().name("Company_2").password("password_2").email("Company@_2").coupons(new ArrayList<>()).build();
-            Company company3 = Company.builder().name("Company_3").password("password_3").email("Company@_3").coupons(new ArrayList<>()).build();
+
+            Company company1 = Company.builder().name("Company_1").password("password_1").email("Company_1@gmail.com").coupons(new ArrayList<>()).build();
+            Company company2 = Company.builder().name("Company_2").password("password_2").email("Company_2@gmail.com").coupons(new ArrayList<>()).build();
+            Company company3 = Company.builder().name("Company_3").password("password_3").email("Company_3@gmail.com").coupons(new ArrayList<>()).build();
             ///////////////////////////////////////////////////////////////////////////////////////////
             Customer customer1 = Customer.builder().firstName("customer_1").lastName("dov_1").email("asd_1").password("aaa1_1").coupons(new ArrayList<>()).build();
             Customer customer2 = Customer.builder().firstName("customer_2").lastName("dov_2").email("asd_2").password("aaa1_2").coupons(new ArrayList<>()).build();
             Customer customer3 = Customer.builder().firstName("customer_3").lastName("dov_3").email("asd_3").password("aaa1_3").coupons(new ArrayList<>()).build();
+            List<Company> companyList = new ArrayList<>();
+
+            for (int i = 0; i < 30; i++) {
+                companyList.add(Company.builder().name("Company_"+(i+4)).password("password_"+(i+4)).email("Company_"+(i+4)+"@gmail.com").coupons(new ArrayList<>()).build());
+            }
+
             ////////////////////////////////////////////////////////////////////////////////////////////////
             try {
                 System.out.println("****TESTING ADD COMPANY****");
                 adminService.addCompany(company1);
                 adminService.addCompany(company2);
                 adminService.addCompany(company3);
+                for (int i = 0; i < 30; i++) {
+                    adminService.addCompany(companyList.get(i));
+                }
                 //adding the same company
                 adminService.addCompany(company3);
             } catch (CouponSystemException s) {

@@ -1,6 +1,7 @@
 package com.example.couponSystem2.controllers.main;
 
 
+import com.example.couponSystem2.controllers.ResponseDetails;
 import com.example.couponSystem2.entities.Company;
 import com.example.couponSystem2.entities.Customer;
 import com.example.couponSystem2.services.AdminServiceImplementation;
@@ -35,7 +36,7 @@ public class AdminController {
     public ResponseEntity<?> updateCompany(@RequestBody Company company, @RequestHeader("token") String token) {
         System.out.println("Got: " + company);
         ((AdminServiceImplementation) tokensManager.getService(token)).updateCompany(company);
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully updated company", HttpStatus.OK);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success","Company successfully updated"), HttpStatus.OK);
         return responseEntity;
     }
 
@@ -44,7 +45,9 @@ public class AdminController {
     public ResponseEntity<?> deleteCompany(@RequestBody Company company, @RequestHeader("token") String token) {
         ((AdminServiceImplementation) tokensManager.getService(token)).deleteCompany(company);
         System.out.println("delete company: " + company);
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success","Company successfully deleted"), HttpStatus.OK);
+        System.out.println("deleteCompany: " + responseEntity);
+        return responseEntity;
     }
 
     @GetMapping("/getAllCompanies")
@@ -88,7 +91,8 @@ public class AdminController {
     public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer, @RequestHeader("token") String token) {
         ((AdminServiceImplementation) tokensManager.getService(token)).deleteCustomer(customer.getId());
         System.out.println("delete customer: " + customer);
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("Success", HttpStatus.OK);
+        return responseEntity;
     }
 
     @GetMapping("/getAllCustomers")
