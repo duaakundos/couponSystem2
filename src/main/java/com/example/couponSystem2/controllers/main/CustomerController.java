@@ -1,5 +1,6 @@
 package com.example.couponSystem2.controllers.main;
 
+import com.example.couponSystem2.controllers.ResponseDetails;
 import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Coupon;
 import com.example.couponSystem2.entities.Customer;
@@ -25,7 +26,7 @@ public class CustomerController {
     public ResponseEntity<?> purchaseCoupon(@RequestBody Coupon coupon, @RequestHeader("token") String token) {
         System.out.println("Got: " + coupon);
         ((CustomerServiceImplementation) tokensManager.getService(token)).purchaseCoupon(coupon);
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully purchased coupon", HttpStatus.OK);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success","You successfully purchased the coupon. Enjoy! and don't forget to come back :)"), HttpStatus.OK);
         return responseEntity;
     }
 
