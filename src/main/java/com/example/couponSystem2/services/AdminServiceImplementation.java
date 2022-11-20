@@ -50,8 +50,11 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
 
     @Override
     public void updateCompany(Company company) {
-        if (companyRepository.findById(company.getId()).isEmpty()){
+        if (companyRepository.findById(company.getId()).isEmpty()) {
             throw new CouponSystemException(CompanyEnumException.COMPANY_NOT_FOUND);
+        }
+        if (companyRepository.existsCompanyByEmailAndIdIsNot(company.getEmail(), company.getId())) {
+            throw new CouponSystemException(CompanyEnumException.COMPANY_NAME_OR_EMAIL_ALREADY_EXISTS);
         }
         companyRepository.updateCompany(company.getEmail(), company.getPassword(), company.getId());
     }
@@ -80,7 +83,7 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
 
     @Override
     public Customer addCustomer(Customer customer) {
-        if (customerRepository.existsCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword())) {
+        if (customerRepository.existsCustomerByEmail(customer.getEmail())) {
             throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_ALREADY_EXISTS);
         }
         Customer customerFromDB = customerRepository.save(customer);
@@ -92,16 +95,15 @@ public class AdminServiceImplementation extends ClientService implements AdminSe
         if (customerRepository.findById(customer.getId()).isEmpty()) {
             throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND);
         }
-        customerRepository.updateCustomer(customer.getEmail(), customer.getPassword(), customer.getId());
+        if (customerRepository.existsCustomerByEmailAndIdIsNot(customer.getEmail(),customer.getId())) {
+            throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_ALREADY_EXISTS);
+        }
+        customerRepository.updateCustomer(customer.getFirstName(), customer.getLastName(), customer.getEmail(), customer.getPassword(), customer.getId());
     }
 
     @Override
     public void deleteCustomer(int customerID) {
         customerRepository.findById(customerID).orElseThrow(() -> new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND));
-//        System.out.println("tomer 2" + customer);
-//        if (!customerRepository.existsCustomerByEmailAndPassword(customer.getEmail(), customer.getPassword())) {
-//            throw new CouponSystemException(CustomerEnumExceptions.CUSTOMER_NOT_FOUND);
-//        }
         customerRepository.deleteById(customerID);
     }
 
