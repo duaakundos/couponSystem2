@@ -25,8 +25,8 @@ public class AdminController {
     @ResponseBody
     public ResponseEntity<?> addCompany(@RequestBody Company company, @RequestHeader("token") String token) {
         System.out.println("Got: " + company);
-        Company companyID = ((AdminServiceImplementation) tokensManager.getService(token)).addCompany(company);
-        ResponseEntity<Company> responseEntity = new ResponseEntity<>(companyID, HttpStatus.OK);
+        ((AdminServiceImplementation) tokensManager.getService(token)).addCompany(company);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success","Company successfully Added"), HttpStatus.OK);
         return responseEntity;
     }
 
@@ -72,8 +72,8 @@ public class AdminController {
     @ResponseBody
     public ResponseEntity<?> addCustomer(@RequestBody Customer customer, @RequestHeader("token") String token) {
         System.out.println("Got: " + customer);
-        Customer customerID = ((AdminServiceImplementation) tokensManager.getService(token)).addCustomer(customer);
-        ResponseEntity<Customer> responseEntity = new ResponseEntity<>(customerID, HttpStatus.OK);
+        ((AdminServiceImplementation) tokensManager.getService(token)).addCustomer(customer);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success","Customer Successfully Added"), HttpStatus.OK);
         return responseEntity;
     }
 
@@ -82,7 +82,7 @@ public class AdminController {
     public ResponseEntity<?> updateCustomer(@RequestBody Customer customer, @RequestHeader("token") String token) {
         System.out.println("Got: " + customer);
         ((AdminServiceImplementation) tokensManager.getService(token)).updateCustomer(customer);
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully updated customer", HttpStatus.OK);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success","Customer Successfully Updated"), HttpStatus.OK);
         return responseEntity;
     }
 
@@ -91,7 +91,7 @@ public class AdminController {
     public ResponseEntity<?> deleteCustomer(@RequestBody Customer customer, @RequestHeader("token") String token) {
         ((AdminServiceImplementation) tokensManager.getService(token)).deleteCustomer(customer.getId());
         System.out.println("delete customer: " + customer);
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("Success", HttpStatus.OK);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success","Customer Successfully Deleted"), HttpStatus.OK);
         return responseEntity;
     }
 

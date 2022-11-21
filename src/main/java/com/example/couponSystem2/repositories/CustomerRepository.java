@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     //isCustomerExists
     boolean existsCustomerByEmailAndPassword(String email, String password);
-
+    boolean existsCustomerByEmail(String email);
+    boolean existsCustomerByEmailAndIdIsNot(String email,int id);
     //update customer
     @Transactional
     @Modifying
-    @Query(value = "update customers c set c.customer_email = :email, c.customer_password = :password where c.customer_id = :id", nativeQuery = true)
-    void updateCustomer(@Param("email") String email, @Param("password") String password, @Param("id") int id);
+    @Query(value = "update customers c set c.customer_first_name = :firstName,c.customer_last_name = :lastName,c.customer_email = :email, c.customer_password = :password where c.customer_id = :id", nativeQuery = true)
+    void updateCustomer(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("email") String email, @Param("password") String password, @Param("id") int id);
 
     //getCustomerID
     @Query(value = "select customer_id from customers c where c.customer_email = :email and c.customer_password = :password", nativeQuery = true)

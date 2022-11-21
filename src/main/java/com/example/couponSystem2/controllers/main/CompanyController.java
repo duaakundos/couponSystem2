@@ -1,5 +1,6 @@
 package com.example.couponSystem2.controllers.main;
 
+import com.example.couponSystem2.controllers.ResponseDetails;
 import com.example.couponSystem2.entities.Category;
 import com.example.couponSystem2.entities.Company;
 import com.example.couponSystem2.entities.Coupon;
@@ -26,8 +27,8 @@ public class CompanyController {
     @ResponseBody
     public ResponseEntity<?> addCoupon(@RequestBody Coupon coupon, @RequestHeader("token") String token) {
         System.out.println("Got: " + coupon);
-        Coupon addCoupon = ((CompanyServiceImplementation) tokensManager.getService(token)).addCoupon(coupon);
-        ResponseEntity<Coupon> responseEntity = new ResponseEntity<>(addCoupon, HttpStatus.OK);
+        ((CompanyServiceImplementation) tokensManager.getService(token)).addCoupon(coupon);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success", "Coupon Successfully Added"), HttpStatus.OK);
         return responseEntity;
     }
 
@@ -37,17 +38,17 @@ public class CompanyController {
     public ResponseEntity<?> updateCoupon(@RequestBody Coupon coupon, @RequestHeader("token") String token) {
         System.out.println("Got: " + coupon);
         ((CompanyServiceImplementation) tokensManager.getService(token)).updateCoupon(coupon);
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully updated coupon", HttpStatus.OK);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success", "Coupon Successfully Updated"), HttpStatus.OK);
         return responseEntity;
     }
 
 
-    @DeleteMapping("/DeleteCoupon")
+    @DeleteMapping("/deleteCoupon")
     @ResponseBody
     public ResponseEntity<?> deleteCoupon(@RequestBody Coupon coupon, @RequestHeader("token") String token) {
         System.out.println("Got: " + coupon);
         ((CompanyServiceImplementation) tokensManager.getService(token)).deleteCoupon(coupon);
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("successfully deleted coupon", HttpStatus.OK);
+        ResponseEntity<ResponseDetails> responseEntity = new ResponseEntity<>(new ResponseDetails("Success", "Coupon Successfully Deleted"), HttpStatus.OK);
         return responseEntity;
     }
 
