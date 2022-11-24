@@ -14,14 +14,14 @@ public class CompanyControllerAdvise {
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ErrorDetails> handle(Exception e) {
-        ErrorDetails error = new ErrorDetails("Custom Error", e.getMessage());
+        ErrorDetails error = new ErrorDetails("Oops.. :)", e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {CouponSystemException.class})
     public ResponseEntity<ErrorDetails> handle(CouponSystemException e) {
         System.out.println(e.getErrorDetails());
-        ErrorDetails error = new ErrorDetails("Custom Error", e.getErrorDetails().toString());
+        ErrorDetails error = new ErrorDetails("Oops.. :)", e.getErrorDetails().toString());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
